@@ -52,8 +52,8 @@ public class RobotoCalendarView extends LinearLayout {
     private static final String DAY_OF_THE_MONTH_LAYOUT = "dayOfTheMonthLayout";
     private static final String DAY_OF_THE_MONTH_TEXT = "dayOfTheMonthText";
     private static final String DAY_OF_THE_MONTH_BACKGROUND = "dayOfTheMonthBackground";
-    private static final String DAY_OF_THE_MONTH_CIRCLE_IMAGE_1 = "dayOfTheMonthCircleImage1";
-    private static final String DAY_OF_THE_MONTH_CIRCLE_IMAGE_2 = "dayOfTheMonthCircleImage2";
+    private static final String DAY_OF_THE_MONTH_TICK_IMAGE = "dayOfTheMonthTickImage";
+    private static final String DAY_OF_THE_MONTH_WARN_IMAGE = "dayOfTheMonthWarnImage";
 
     private TextView dateTitle;
     private ImageView leftButton;
@@ -81,7 +81,7 @@ public class RobotoCalendarView extends LinearLayout {
             calendar.set(Calendar.MONTH, currentCalendar.get(Calendar.MONTH));
             calendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(dayOfTheMonthText.getText().toString()));
 
-            markDayAsSelectedDay(calendar.getTime());
+//            markDayAsSelectedDay(calendar.getTime());
 
             // Fire event
             if (robotoCalendarListener == null) {
@@ -107,7 +107,7 @@ public class RobotoCalendarView extends LinearLayout {
             calendar.set(Calendar.MONTH, currentCalendar.get(Calendar.MONTH));
             calendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(dayOfTheMonthText.getText().toString()));
 
-            markDayAsSelectedDay(calendar.getTime());
+//            markDayAsSelectedDay(calendar.getTime());
 
             // Fire event
             if (robotoCalendarListener == null) {
@@ -210,11 +210,11 @@ public class RobotoCalendarView extends LinearLayout {
         setDate(currentCalendar.getTime());
 
         ViewPump.init(ViewPump.builder()
-                              .addInterceptor(new CalligraphyInterceptor(
-                                      new CalligraphyConfig.Builder()
-                                              .setFontAttrId(R.attr.fontPath)
-                                              .build()))
-                              .build());
+                .addInterceptor(new CalligraphyInterceptor(
+                        new CalligraphyConfig.Builder()
+                                .setFontAttrId(R.attr.fontPath)
+                                .build()))
+                .build());
     }
 
     /**
@@ -254,14 +254,14 @@ public class RobotoCalendarView extends LinearLayout {
         TextView dayOfTheMonth = getDayOfMonthText(calendar);
         dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
 
-        ImageView circleImage1 = getCircleImage1(calendar);
-        ImageView circleImage2 = getCircleImage2(calendar);
-        if (circleImage1.getVisibility() == VISIBLE) {
-            DrawableCompat.setTint(circleImage1.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
+        ImageView tickImage = getTickImage(calendar);
+        ImageView warnImage = getWarnImage(calendar);
+        if (tickImage.getVisibility() == VISIBLE) {
+            DrawableCompat.setTint(tickImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
         }
 
-        if (circleImage2.getVisibility() == VISIBLE) {
-            DrawableCompat.setTint(circleImage2.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
+        if (warnImage.getVisibility() == VISIBLE) {
+            DrawableCompat.setTint(warnImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
         }
     }
 
@@ -280,14 +280,14 @@ public class RobotoCalendarView extends LinearLayout {
             TextView dayOfTheMonth = getDayOfMonthText(lastSelectedDayCalendar);
             dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_day_of_the_month_font));
 
-            ImageView circleImage1 = getCircleImage1(lastSelectedDayCalendar);
-            ImageView circleImage2 = getCircleImage2(lastSelectedDayCalendar);
-            if (circleImage1.getVisibility() == VISIBLE) {
-                DrawableCompat.setTint(circleImage1.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_1));
+            ImageView tickImage = getTickImage(lastSelectedDayCalendar);
+            ImageView warnImage = getWarnImage(lastSelectedDayCalendar);
+            if (tickImage.getVisibility() == VISIBLE) {
+                DrawableCompat.setTint(tickImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_tick));
             }
 
-            if (circleImage2.getVisibility() == VISIBLE) {
-                DrawableCompat.setTint(circleImage2.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_2));
+            if (warnImage.getVisibility() == VISIBLE) {
+                DrawableCompat.setTint(warnImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_warn));
             }
         }
     }
@@ -296,27 +296,27 @@ public class RobotoCalendarView extends LinearLayout {
         this.shortWeekDays = shortWeekDays;
     }
 
-    public void markCircleImage1(@NonNull Date date) {
+    public void markTickImage(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        ImageView circleImage1 = getCircleImage1(calendar);
-        circleImage1.setVisibility(View.VISIBLE);
+        ImageView tickImage = getTickImage(calendar);
+        tickImage.setVisibility(View.VISIBLE);
         if (lastSelectedDayCalendar != null && areInTheSameDay(calendar, lastSelectedDayCalendar)) {
-            DrawableCompat.setTint(circleImage1.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
+            DrawableCompat.setTint(tickImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
         } else {
-            DrawableCompat.setTint(circleImage1.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_1));
+            DrawableCompat.setTint(tickImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_tick));
         }
     }
 
-    public void markCircleImage2(@NonNull Date date) {
+    public void markWarnImage(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        ImageView circleImage2 = getCircleImage2(calendar);
-        circleImage2.setVisibility(View.VISIBLE);
+        ImageView warnImage = getWarnImage(calendar);
+        warnImage.setVisibility(View.VISIBLE);
         if (lastSelectedDayCalendar != null && areInTheSameDay(calendar, lastSelectedDayCalendar)) {
-            DrawableCompat.setTint(circleImage2.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
+            DrawableCompat.setTint(warnImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
         } else {
-            DrawableCompat.setTint(circleImage2.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_2));
+            DrawableCompat.setTint(warnImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_warn));
         }
     }
 
@@ -349,16 +349,16 @@ public class RobotoCalendarView extends LinearLayout {
             View dayOfTheMonthLayout = inflate.inflate(R.layout.roboto_calendar_day_of_the_month_layout, null);
             View dayOfTheMonthText = dayOfTheMonthLayout.findViewWithTag(DAY_OF_THE_MONTH_TEXT);
             View dayOfTheMonthBackground = dayOfTheMonthLayout.findViewWithTag(DAY_OF_THE_MONTH_BACKGROUND);
-            View dayOfTheMonthCircleImage1 = dayOfTheMonthLayout.findViewWithTag(DAY_OF_THE_MONTH_CIRCLE_IMAGE_1);
-            View dayOfTheMonthCircleImage2 = dayOfTheMonthLayout.findViewWithTag(DAY_OF_THE_MONTH_CIRCLE_IMAGE_2);
+            View dayOfTheMonthTickImage = dayOfTheMonthLayout.findViewWithTag(DAY_OF_THE_MONTH_TICK_IMAGE);
+            View dayOfTheMonthWarnImage = dayOfTheMonthLayout.findViewWithTag(DAY_OF_THE_MONTH_WARN_IMAGE);
 
             // Set tags to identify them
             int viewIndex = i + 1;
             dayOfTheMonthLayout.setTag(DAY_OF_THE_MONTH_LAYOUT + viewIndex);
             dayOfTheMonthText.setTag(DAY_OF_THE_MONTH_TEXT + viewIndex);
             dayOfTheMonthBackground.setTag(DAY_OF_THE_MONTH_BACKGROUND + viewIndex);
-            dayOfTheMonthCircleImage1.setTag(DAY_OF_THE_MONTH_CIRCLE_IMAGE_1 + viewIndex);
-            dayOfTheMonthCircleImage2.setTag(DAY_OF_THE_MONTH_CIRCLE_IMAGE_2 + viewIndex);
+            dayOfTheMonthTickImage.setTag(DAY_OF_THE_MONTH_TICK_IMAGE + viewIndex);
+            dayOfTheMonthWarnImage.setTag(DAY_OF_THE_MONTH_WARN_IMAGE + viewIndex);
 
             dayOfTheWeekLayout.addView(dayOfTheMonthLayout);
         }
@@ -372,7 +372,7 @@ public class RobotoCalendarView extends LinearLayout {
             }
 
             // Decrease month
-            currentCalendar.add(Calendar.MONTH, -1);
+            setStartDateOfMonth(-1);
             lastSelectedDayCalendar = null;
             updateView();
             robotoCalendarListener.onLeftButtonClick();
@@ -384,11 +384,44 @@ public class RobotoCalendarView extends LinearLayout {
             }
 
             // Increase month
-            currentCalendar.add(Calendar.MONTH, 1);
+            setStartDateOfMonth(1);
             lastSelectedDayCalendar = null;
             updateView();
             robotoCalendarListener.onRightButtonClick();
         });
+    }
+
+    private void setStartDateOfMonth(int monthIncrement) {
+        currentCalendar.add(Calendar.MONTH, monthIncrement);
+        // if is current month, the method markDayAsCurrentDay will handle the situation
+        if (!isAtCurrentMonth()) {
+            currentCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        }
+    }
+
+    public Boolean isAtCurrentMonth() {
+        Calendar tmpCal = Calendar.getInstance();
+        int year = tmpCal.get(Calendar.YEAR);
+        int month = tmpCal.get(Calendar.MONTH);
+        // if the currentCalendar is within the same month with tmpCal(now), then set today
+        if (year == currentCalendar.get(Calendar.YEAR) && month == currentCalendar.get(Calendar.MONTH)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean isAtPreviousMonth() {
+        Calendar tmpCal = Calendar.getInstance();
+        int year = tmpCal.get(Calendar.YEAR);
+        int month = tmpCal.get(Calendar.MONTH);
+        // if the currentCalendar is within the same month with tmpCal(now), then set today
+        if (year == currentCalendar.get(Calendar.YEAR) && month > currentCalendar.get(Calendar.MONTH) ||
+                year > currentCalendar.get(Calendar.YEAR)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void setUpMonthLayout() {
@@ -423,8 +456,8 @@ public class RobotoCalendarView extends LinearLayout {
     private void setUpDaysOfMonthLayout() {
 
         TextView dayOfTheMonthText;
-        View circleImage1;
-        View circleImage2;
+        View tickImage;
+        View warnImage;
         ViewGroup dayOfTheMonthContainer;
         ViewGroup dayOfTheMonthBackground;
 
@@ -433,12 +466,12 @@ public class RobotoCalendarView extends LinearLayout {
             dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + i);
             dayOfTheMonthBackground = rootView.findViewWithTag(DAY_OF_THE_MONTH_BACKGROUND + i);
             dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + i);
-            circleImage1 = rootView.findViewWithTag(DAY_OF_THE_MONTH_CIRCLE_IMAGE_1 + i);
-            circleImage2 = rootView.findViewWithTag(DAY_OF_THE_MONTH_CIRCLE_IMAGE_2 + i);
+            tickImage = rootView.findViewWithTag(DAY_OF_THE_MONTH_TICK_IMAGE + i);
+            warnImage = rootView.findViewWithTag(DAY_OF_THE_MONTH_WARN_IMAGE + i);
 
             dayOfTheMonthText.setVisibility(View.INVISIBLE);
-            circleImage1.setVisibility(View.GONE);
-            circleImage2.setVisibility(View.GONE);
+            tickImage.setVisibility(View.GONE);
+            warnImage.setVisibility(View.GONE);
 
             // Apply styles
             dayOfTheMonthText.setBackgroundResource(android.R.color.transparent);
@@ -490,7 +523,8 @@ public class RobotoCalendarView extends LinearLayout {
         // If it's the current month, mark current day
         Calendar nowCalendar = Calendar.getInstance();
         if (nowCalendar.get(Calendar.YEAR) == currentCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.MONTH) == currentCalendar.get(Calendar.MONTH)) {
-            Calendar currentCalendar = Calendar.getInstance();
+            // commented below line by the original author, for my need it is more accurate to update the currentCalendar's time when marking the current day
+//            Calendar currentCalendar = Calendar.getInstance();
             currentCalendar.setTime(nowCalendar.getTime());
 
             ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(currentCalendar);
@@ -514,12 +548,12 @@ public class RobotoCalendarView extends LinearLayout {
         return (TextView) getView(DAY_OF_THE_MONTH_TEXT, currentCalendar);
     }
 
-    private ImageView getCircleImage1(Calendar currentCalendar) {
-        return (ImageView) getView(DAY_OF_THE_MONTH_CIRCLE_IMAGE_1, currentCalendar);
+    private ImageView getTickImage(Calendar currentCalendar) {
+        return (ImageView) getView(DAY_OF_THE_MONTH_TICK_IMAGE, currentCalendar);
     }
 
-    private ImageView getCircleImage2(Calendar currentCalendar) {
-        return (ImageView) getView(DAY_OF_THE_MONTH_CIRCLE_IMAGE_2, currentCalendar);
+    private ImageView getWarnImage(Calendar currentCalendar) {
+        return (ImageView) getView(DAY_OF_THE_MONTH_WARN_IMAGE, currentCalendar);
     }
 
     private View getView(String key, Calendar currentCalendar) {

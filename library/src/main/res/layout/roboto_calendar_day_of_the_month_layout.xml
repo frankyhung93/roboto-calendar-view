@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,19 +37,17 @@
             android:showDividers="middle">
 
             <ImageView
-                android:layout_width="@dimen/roboto_calendar_circle_size"
-                android:layout_height="@dimen/roboto_calendar_circle_size"
-                android:src="@drawable/circle"
-                android:tag="dayOfTheMonthCircleImage1"
-                android:tint="@color/roboto_calendar_circle_1"
+                android:layout_width="@dimen/roboto_calendar_tick_size"
+                android:layout_height="@dimen/roboto_calendar_tick_size"
+                app:srcCompat="@drawable/ic_valid"
+                android:tag="dayOfTheMonthTickImage"
                 android:visibility="visible" />
 
             <ImageView
-                android:layout_width="@dimen/roboto_calendar_circle_size"
-                android:layout_height="@dimen/roboto_calendar_circle_size"
-                android:src="@drawable/circle"
-                android:tag="dayOfTheMonthCircleImage2"
-                android:tint="@color/roboto_calendar_circle_2"
+                android:layout_width="@dimen/roboto_calendar_warn_size"
+                android:layout_height="@dimen/roboto_calendar_warn_size"
+                app:srcCompat="@drawable/ic_error"
+                android:tag="dayOfTheMonthWarnImage"
                 android:visibility="visible" />
         </LinearLayout>
     </RelativeLayout>

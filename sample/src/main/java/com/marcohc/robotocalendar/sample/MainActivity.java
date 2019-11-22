@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarLis
 
             switch (style) {
                 case 0:
-                    robotoCalendarView.markCircleImage1(calendar.getTime());
+                    robotoCalendarView.markTickImage(calendar.getTime());
                     break;
                 case 1:
-                    robotoCalendarView.markCircleImage2(calendar.getTime());
+                    robotoCalendarView.markWarnImage(calendar.getTime());
                     break;
                 default:
                     break;
@@ -100,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarLis
 
     @Override
     public void onRightButtonClick() {
-        Toast.makeText(this, "onRightButtonClick!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, (robotoCalendarView.isAtPreviousMonth()?"PREVIOUS--":"")+robotoCalendarView.getDate().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLeftButtonClick() {
-        Toast.makeText(this, "onLeftButtonClick!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, (robotoCalendarView.isAtPreviousMonth()?"PREVIOUS--":"")+robotoCalendarView.getDate().toString(), Toast.LENGTH_SHORT).show();
     }
 
 }
