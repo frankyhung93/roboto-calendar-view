@@ -49,6 +49,11 @@ Developed By
 ------------
 
 * Marco Hernaiz Cao - <marco.hernaiz.cao@gmail.com>
+
+Forked By
+------------
+
+* Franky Hung <Mageek>
  
 Credits
 -------
